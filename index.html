@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>hehe haha website with pugs made by James Arellano</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
+            overflow: hidden; /* Prevent scrolling */
+            position: relative;
+        }
+
+        button {
+            position: absolute;
+            bottom: 20px; /* Adjust distance from bottom */
+            left: 20px; /* Adjust distance from left */
+            padding: 15px 20px; /* Adjust padding to make it more narrow */
+            font-size: 16px; /* Adjust font size to match */
+            background-color: grey; /* Change button color to grey */
+            color: white;
+            border: none;
+            border-radius: 10px; /* Adjust border radius to make it slightly rounder */
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            z-index: 2; /* Ensure button stays on top */
+        }
+
+        button:hover {
+            background-color: darkgrey; /* Change hover color to darkgrey */
+        }
+
+        .pug {
+            position: absolute;
+            width: 50px; /* Adjust size as needed */
+            height: 50px; /* Adjust size as needed */
+            background-image: url('https://th.bing.com/th/id/R.4ab893ddefc4f04e3dcc917144d335b9?rik=PVFUK6Wv2L9Gsg&riu=http%3a%2f%2faboutpug.com%2fwp-content%2fuploads%2f2014%2f06%2fPugs-up-close-and-personal.jpg&ehk=RgjWpGqp4ctTzzwRcNIvpW097E8B%2fe6j5o6EEDvNyOU%3d&risl=&pid=ImgRaw&r=0');
+            background-size: cover;
+            z-index: 1; /* Ensure pugs stay behind the button */
+        }
+
+        .credit {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            font-size: 20px; /* Increase font size */
+            color: grey; /* Change text color to grey */
+        }
+
+        .spinning-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 36px; /* Increase font size */
+            color: grey; /* Change text color to grey */
+            animation: spin 4s linear infinite; /* Add spinning animation */
+        }
+
+        @keyframes spin {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <button onclick="changeGradient()">Change Gradient</button>
+    <div class="credit">hehe haha website made by James Arellano</div>
+    <div class="spinning-text">Pugs are the best in the whole wide world</div>
+
+    <script>
+        var colors = ['#ff0000', '#ff6600', '#ffff00', '#00ff00', '#0000ff', '#6600cc', '#8b00ff'];
+        var currentIndex = 0;
+
+        function changeGradient() {
+            document.body.style.background = `linear-gradient(to right, ${colors[currentIndex]}, ${colors[currentIndex + 1]})`;
+            currentIndex = (currentIndex + 1) % (colors.length - 1);
+        }
+
+        function createPug() {
+            var pug = new Image();
+            pug.src = 'https://th.bing.com/th/id/R.4ab893ddefc4f04e3dcc917144d335b9?rik=PVFUK6Wv2L9Gsg&riu=http%3a%2f%2faboutpug.com%2fwp-content%2fuploads%2f2014%2f06%2fPugs-up-close-and-personal.jpg&ehk=RgjWpGqp4ctTzzwRcNIvpW097E8B%2fe6j5o6EEDvNyOU%3d&risl=&pid=ImgRaw&r=0';
+            pug.classList.add('pug');
+            pug.style.left = Math.random() * (window.innerWidth - 50) + 'px'; // Subtract width of pug to ensure it doesn't go off-screen
+            pug.style.top = -50 + 'px'; // Start above the screen
+            document.body.appendChild(pug);
+            setInterval(() => {
+                var pugRect = pug.getBoundingClientRect();
+                if (pugRect.bottom <= window.innerHeight) { // If pug hasn't reached bottom of the screen
+                    pug.style.top = pugRect.top + 20 + 'px'; // Move pug downwards more quickly
+                } else { // If pug reaches bottom of the screen
+                    pug.remove(); // Remove pug from the DOM
+                }
+            }, 30); // Adjust interval to control pug fall speed
+        }
+
+        setInterval(createPug, 100); // Increase spawn rate
+    </script>
+</body>
+</html>
